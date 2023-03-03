@@ -16,7 +16,7 @@ export default {
         fetchCard(){
             console.log('fetching data')
             //fare chiamata in get all'endpoint
-            axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
+            axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0')
             .then((res)=>{
                 //decide chi implementa l'API che ti po di risposta viene data
                 const cards = res.data.data;
