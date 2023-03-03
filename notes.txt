@@ -1,0 +1,9 @@
+/// ES
+Seguite i passaggi come abbiamo fatto in classe per evitare di fare confusione:
+- creare la struttura base con i componenti header e main
+- dentro a main, nel mounted/created fare la chiamata con axios e salvare in data l’array di carte che manda il server come risposta
+- dentro main ciclate l’array e stampatevi un componente carta per ogni elemento passando le props necessarie per mostrare; l’immagine, il nome e l’archetype
+- spostate l’array dentro allo store
+- infine pensate al bonus
+BONUS 
+- creare un componente che mostri il numero totale di risultati ottenuti.
