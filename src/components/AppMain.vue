@@ -21,7 +21,8 @@ export default {
                 //decide chi implementa l'API che ti po di risposta viene data
                 const cards = res.data.data;
                 this.store.cards = cards;
-                console.log('cards', cards)
+                this.store.count = cards.length;
+                console.log('cards', res)
             })
         }
     },
@@ -45,6 +46,10 @@ export default {
                     <option value="">type 2</option>
                     <option value="">type 3</option>
                 </select>
+            </div>
+
+            <div class="counter">
+                {{ store.count }}
             </div>
 
             <div class="cards">
@@ -75,7 +80,7 @@ export default {
 
 }
 
-.select-wrapper {
+.select-wrapper, .counter {
     margin-bottom: 30px;
 }
 
