@@ -7,3 +7,10 @@ Seguite i passaggi come abbiamo fatto in classe per evitare di fare confusione:
 - infine pensate al bonus
 BONUS 
 - creare un componente che mostri il numero totale di risultati ottenuti.
+
+
+/// NOTES
+Data from API:
+- data.id
+- data.name
+- data.card_images.image_url

@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    font-family: 'Courier New', Courier, monospace;
 }
 
 a {
@@ -15,6 +17,7 @@ menu, ol, ul, li {
 
 img {
     max-width: 100%;
+    display: block;
 }
 
 button {
@@ -24,4 +27,9 @@ button {
 .container {
     max-width: 1240px;
     margin: 0 auto;
+}
+
+select {
+    border: none;
+    padding: 10px;
 }
