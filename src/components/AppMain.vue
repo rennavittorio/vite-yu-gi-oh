@@ -1,5 +1,34 @@
 <script>
+import axios from 'axios';
+import store from '../store';
+import AppCard from './AppCard.vue';
+
 export default {
+    components: {
+        AppCard,
+    },
+    data(){
+        return {
+            store,
+        }
+    },
+    methods: {
+        fetchCard(){
+            console.log('fetching data')
+            //fare chiamata in get all'endpoint
+            axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
+            .then((res)=>{
+                //decide chi implementa l'API che ti po di risposta viene data
+                const cards = res.data.data;
+                this.store.cards = cards;
+                console.log('cards', cards)
+            })
+        }
+    },
+
+    created(){
+        this.fetchCard()
+    }
     
 }
 </script>
@@ -20,50 +49,10 @@ export default {
 
             <div class="cards">
 
-                <!-- card protorype -->
-                <div class="card">
-                    <div class="card__img">
-                        <img src="#" alt="">
-
-                    </div>
-                    <h3 class="card__name">
-                        card name...
-                    </h3>
-                    <h5 class="card__type">
-                        card type...
-                    </h5>
-                </div>
-                <!-- card protorype -->
-
-                <!-- card protorype -->
-                <div class="card">
-                    <div class="card__img">
-                        <img src="#" alt="">
-
-                    </div>
-                    <h3 class="card__name">
-                        card name...
-                    </h3>
-                    <h5 class="card__type">
-                        card type...
-                    </h5>
-                </div>
-                <!-- card protorype -->
-
-                <!-- card protorype -->
-                <div class="card">
-                    <div class="card__img">
-                        <img src="#" alt="">
-
-                    </div>
-                    <h3 class="card__name">
-                        card name...
-                    </h3>
-                    <h5 class="card__type">
-                        card type...
-                    </h5>
-                </div>
-                <!-- card protorype -->
+                <AppCard 
+                v-for="card in store.cards" :key="card.id" 
+                :image_url="card.card_images[0].image_url" :card_name="card.name" :card_type="card.archetype"
+                />
 
             </div>
 
@@ -95,33 +84,6 @@ export default {
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
 
-
-    .card {
-        padding: 20px;
-        text-align: center;
-        border: 2px solid black;
-    
-        .card__img {
-            width: 100px;
-    
-            img {
-                aspect-ratio: 3/6;
-                object-fit: cover;
-                object-position: center;
-            }
-        }
-    
-    
-        .card__name {
-            font-size: 1rem;
-            font-weight: 700;
-        }
-    
-        .card__type {
-            font-size: 0.75rem;
-            font-style: italic;
-        }
-    }
 
 }
 
