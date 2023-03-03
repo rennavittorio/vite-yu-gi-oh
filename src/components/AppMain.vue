@@ -10,26 +10,41 @@ export default {
     data(){
         return {
             store,
+            offsetIndex: store.pageIndex,
         }
     },
     methods: {
         fetchCard(){
             console.log('fetching data')
+            // currentOffset = this.offsetIndex;
             //fare chiamata in get all'endpoint
-            axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0')
+            axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=${this.offsetIndex}`)
             .then((res)=>{
                 //decide chi implementa l'API che ti po di risposta viene data
                 const cards = res.data.data;
                 this.store.cards = cards;
                 this.store.count = cards.length;
-                console.log('cards', res)
+                // console.log('cards', res)
             })
-        }
+        },
+
     },
+
+    // watch: { 
+        //test--------------------------------
+    //     offsetIndex(newIndex, oldIndex) {
+    //         if (newIndex !== oldIndex){
+    //             // this.fetchCard()
+    //             console.log('on main', this.offsetIndex)
+
+    //         }
+    //     }
+    // },
 
     created(){
         this.fetchCard()
-    }
+    },
+
     
 }
 </script>
