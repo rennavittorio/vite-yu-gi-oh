@@ -14,3 +14,30 @@ Data from API:
 - data.id
 - data.name
 - data.card_images.image_url
+
+
+SOLUZIONE con searchbar dentro main (parent <- child)
+fetchCard(){
+    console.log('fetching data')
+    axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=${0}`) //1st method per passare param: template literal
+
+    /* axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php`, { //2nd method: aggiungere object con params objects (e dentro i value)
+        params: {
+            num: 20,
+            offset: 0,
+        }
+    }) */
+    .then((res)=>{
+        //decide chi implementa l'API che ti po di risposta viene data
+        const cards = res.data.data;
+        this.store.cards = cards;
+        this.store.count = cards.length;
+    })
+    .catch((error)=>{ //serve per recuperare gli errori generati dal server (da concatenare subito dopo il then.)
+    console.log(error);
+    //in caso di errore vogliamo 'resettare' i nostri params
+    })
+    .finally(()=>{ //serve per eseguire comunque il codice anche in caso di errore
+
+    })
+}

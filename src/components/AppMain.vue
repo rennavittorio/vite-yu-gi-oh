@@ -2,31 +2,49 @@
 import axios from 'axios';
 import store from '../store';
 import AppCard from './AppCard.vue';
+import AppFilter from './AppFilter.vue';
 
 export default {
     components: {
         AppCard,
+        AppFilter,
     },
     data(){
         return {
             store,
-            offsetIndex: store.pageIndex,
         }
     },
     methods: {
         fetchCard(){
             console.log('fetching data')
-            // currentOffset = this.offsetIndex;
-            //fare chiamata in get all'endpoint
-            axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=${this.offsetIndex}`)
+            const offset = this.store.offset //1. richiamo e salvo la variabile
+            axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php`, {
+                params: {
+                    num: 20,
+                    offset: 0,
+                    fname: this.store.searchName,
+                }
+            }) //2. inserisco la var tra le option
             .then((res)=>{
                 //decide chi implementa l'API che ti po di risposta viene data
                 const cards = res.data.data;
                 this.store.cards = cards;
                 this.store.count = cards.length;
-                // console.log('cards', res)
+            })
+            .catch((error)=>{ //serve per recuperare gli errori generati dal server (da concatenare subito dopo il then.)
+                console.log(error);
+                //in caso di errore vogliamo 'resettare' i nostri params
+            })
+            .finally(()=>{ //serve per eseguire comunque il codice anche in caso di errore
+
             })
         },
+
+        onSearchFunction(){
+            console.log('onSearchEvent done')
+            this.fetchCard()
+            
+        }
 
     },
 
@@ -55,13 +73,22 @@ export default {
 
         <div class="container">
 
-            <div class="select-wrapper">
-                <select name="cardType" id="" value="">
-                    <option value="">type 1</option>
-                    <option value="">type 2</option>
-                    <option value="">type 3</option>
-                </select>
+            <div class="wrapper">
+                <div class="select-wrapper">
+                    <select name="cardType" id="" value="">
+                        <option value="">type 1</option>
+                        <option value="">type 2</option>
+                        <option value="">type 3</option>
+                    </select>
+                </div>
+                
+                <div class="search_bar">
+                    <AppFilter
+                    @onSearch="onSearchFunction"
+                    />
+                </div>
             </div>
+
 
             <div class="counter">
                 {{ store.count }}
@@ -71,7 +98,7 @@ export default {
 
                 <AppCard 
                 v-for="card in store.cards" :key="card.id" 
-                :image_url="card.card_images[0].image_url" :card_name="card.name" :card_type="card.archetype"
+                :image_url="card.card_images[0].image_url" :card_name="card.name" :card_type="card.type"
                 />
 
             </div>
@@ -90,6 +117,11 @@ export default {
 
     .container{
         padding: 50px 0;
+
+        .wrapper {
+            display: flex;
+            gap: 50px;
+        }
         
     }
 
