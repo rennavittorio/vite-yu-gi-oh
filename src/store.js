@@ -8,6 +8,7 @@ const store = reactive({
 
     //serve per inviare info al comp padre
     searchName: '',
+    filteredCardType: 'Normal Monster',
     
 })
 

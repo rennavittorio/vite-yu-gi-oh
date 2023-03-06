@@ -6,7 +6,6 @@ export default {
     data(){
         return {
             store,
-            type: ['Normal Monster', 'Effect Monster', 'Synchro Monster', 'Spell Card', 'Trap Card']
         }
     },
 

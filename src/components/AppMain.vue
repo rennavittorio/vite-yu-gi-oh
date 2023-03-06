@@ -3,11 +3,13 @@ import axios from 'axios';
 import store from '../store';
 import AppCard from './AppCard.vue';
 import AppFilter from './AppFilter.vue';
+import AppFilter2 from './AppFilter2.vue';
 
 export default {
     components: {
         AppCard,
         AppFilter,
+        AppFilter2,
     },
     data(){
         return {
@@ -23,6 +25,7 @@ export default {
                     num: 20,
                     offset: 0,
                     fname: this.store.searchName,
+                    type: this.store.filteredCardType,
                 }
             }) //2. inserisco la var tra le option
             .then((res)=>{
@@ -33,18 +36,12 @@ export default {
             })
             .catch((error)=>{ //serve per recuperare gli errori generati dal server (da concatenare subito dopo il then.)
                 console.log(error);
-                //in caso di errore vogliamo 'resettare' i nostri params
+                this.store.filteredCardType = '';
             })
             .finally(()=>{ //serve per eseguire comunque il codice anche in caso di errore
 
             })
         },
-
-        onSearchFunction(){
-            console.log('onSearchEvent done')
-            this.fetchCard()
-            
-        }
 
     },
 
@@ -74,20 +71,17 @@ export default {
         <div class="container">
 
             <div class="wrapper">
-                <div class="select-wrapper">
-                    <select name="cardType" id="" value="">
-                        <option value="">type 1</option>
-                        <option value="">type 2</option>
-                        <option value="">type 3</option>
-                    </select>
-                </div>
-                
+
                 <div class="search_bar">
-                    <AppFilter
-                    @onSearch="onSearchFunction"
-                    />
+                    <AppFilter @onSearch="fetchCard()" />
                 </div>
+
+                <div class="filter_type">
+                    <AppFilter2 @onFilterType="fetchCard()" />
+                </div>
+
             </div>
+                
 
 
             <div class="counter">
