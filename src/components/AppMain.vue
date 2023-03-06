@@ -23,7 +23,7 @@ export default {
             axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php`, {
                 params: {
                     num: 20,
-                    offset: 0,
+                    offset: this.store.pageOffset,
                     fname: this.store.searchName,
                     type: this.store.filteredCardType,
                 }
@@ -45,16 +45,18 @@ export default {
 
     },
 
-    // watch: { 
-        //test--------------------------------
-    //     offsetIndex(newIndex, oldIndex) {
-    //         if (newIndex !== oldIndex){
-    //             // this.fetchCard()
-    //             console.log('on main', this.offsetIndex)
+    computed: {
+        setPageOffset(){
+            return this.store.pageOffset;
+        }
+    },
 
-    //         }
-    //     }
-    // },
+    watch: {
+        setPageOffset(){
+            this.fetchCard();
+            console.log('watch works')
+        }
+    },
 
     created(){
         this.fetchCard()

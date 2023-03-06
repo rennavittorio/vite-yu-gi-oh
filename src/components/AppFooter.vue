@@ -8,9 +8,9 @@ export default {
     },
 
     methods: {
-        setPageIndex(n){
-            this.store.pageIndex = (n - 1) * 20;
-            console.log('new index on footer', this.store.pageIndex)
+        setPageOffset(n){
+            this.store.pageOffset = (n - 1) * 20;
+            console.log('new offset on footer', this.store.pageOffset)
         }
     }
 
@@ -26,7 +26,7 @@ export default {
         <div class="container">
             <ul class="pages">
                 <li
-                @click="setPageIndex(n)"
+                @click="setPageOffset(n)"
                 v-for="n in 5"
                 class="page"
                 >
